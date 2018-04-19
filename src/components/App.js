@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 
 import { handleInitialData } from '../actions/shared'
 
+import Dashboard from './Dashboard'
+
 class App extends Component {
   componentDidMount() {
     this.props.dispatch(handleInitialData())
@@ -12,7 +14,7 @@ class App extends Component {
       <div>
         {this.props.loading
           ? <div>Loading...</div>
-          : <div>Ready all the initial data</div>
+          : <Dashboard />
         }
       </div>
     )
