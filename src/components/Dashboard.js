@@ -3,22 +3,30 @@ import { connect } from 'react-redux'
 
 class Dashboard extends Component {
   render() {
-    const { tweets } = this.props
+    const { other } = this.props
+    console.log(other)
     return (
       <div>
         <ul>
-          {tweets.map(tweet => (
-            <li key={tweet}>{tweet}</li>
+          {other.map(tweet => (
+            <li key={tweet.id}>
+              <h2>{tweet.author}</h2>
+              <p>{tweet.text}</p>
+            </li>
           ))}
         </ul>
       </div>
     )
   }
 }
-function mapStateToProps(state) {
-  const tweets = Object.keys(state.tweets)
+function mapStateToProps({ users, tweets, authedUser }) {
+  const data = users[authedUser].tweets
+
+  const other = data.map(id => tweets[id])
+
+
   return {
-    tweets
+    other
   }
 }
 export default connect(mapStateToProps  )(Dashboard)
