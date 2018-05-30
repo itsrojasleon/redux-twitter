@@ -1,17 +1,16 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import Tweet from './tweet';
 
 class Dashboard extends Component {
   render() {
-    const { other } = this.props
-    console.log(other)
+    const { tweetIds } = this.props;
     return (
       <div>
         <ul>
-          {other.map(tweet => (
-            <li key={tweet.id}>
-              <h2>{tweet.author}</h2>
-              <p>{tweet.text}</p>
+          {tweetIds.map(id => (
+            <li key={id}>
+              <Tweet id={id} />
             </li>
           ))}
         </ul>
@@ -19,14 +18,11 @@ class Dashboard extends Component {
     )
   }
 }
-function mapStateToProps({ users, tweets, authedUser }) {
-  const data = users[authedUser].tweets
-
-  const other = data.map(id => tweets[id])
-
-
+function mapStateToProps({ tweets }) {
+  const tweetIds = Object.keys(tweets)
+    .sort((a, b) => tweets[b].timestamp - tweets[a].timestamp)
   return {
-    other
+    tweetIds,
   }
 }
 export default connect(mapStateToProps  )(Dashboard)
